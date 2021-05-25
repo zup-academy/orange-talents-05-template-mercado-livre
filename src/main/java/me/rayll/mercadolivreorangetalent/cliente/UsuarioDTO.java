@@ -6,9 +6,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import me.rayll.mercadolivreorangetalent.validador.ValorUnico;
+
 public class UsuarioDTO {
 	
-	@NotEmpty @Email
+	@NotEmpty @Email @ValorUnico
 	private String login;
 	@NotEmpty @Size(min = 6)
 	private String pass;
