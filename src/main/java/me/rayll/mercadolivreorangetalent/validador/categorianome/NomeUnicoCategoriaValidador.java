@@ -1,4 +1,4 @@
-package me.rayll.mercadolivreorangetalent.validador;
+package me.rayll.mercadolivreorangetalent.validador.categorianome;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -6,19 +6,18 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import me.rayll.mercadolivreorangetalent.cliente.UsuarioRepository;
+import me.rayll.mercadolivreorangetalent.categoria.CategoriaRepository;
 
 @Component
-public class ValorUnicoValidador implements ConstraintValidator<ValorUnico, Object>{
-
+public class NomeUnicoCategoriaValidador implements ConstraintValidator<NomeUnicoCategoria, Object>{
+	
 	@Autowired
-	private UsuarioRepository repository;
+	CategoriaRepository repository;
 	
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		
-		return repository.existsByLogin(value.toString());
-		
+		return !repository.existsByNome(value.toString());
 	}
 
 }

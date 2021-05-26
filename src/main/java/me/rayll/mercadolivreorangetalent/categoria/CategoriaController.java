@@ -1,32 +1,28 @@
-package me.rayll.mercadolivreorangetalent.cliente;
+package me.rayll.mercadolivreorangetalent.categoria;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import me.rayll.mercadolivreorangetalent.encriptador.Encriptador;
-
 @RestController
-@RequestMapping("mercadolivre/v1/usuario")
-public class UsuarioController {
+@RequestMapping("mercadolivre/v1/categoria")
+public class CategoriaController {
 	
 	@Autowired
-	UsuarioRepository repository;
+	CategoriaRepository repository;
 	
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.OK)
 	@Transactional
-	public void cadastroNovoUsuario(@RequestBody @Valid UsuarioDTO dto) {
-		String encodingPass = Encriptador.encode(dto.getPass());
-		dto.setPass(encodingPass);
-		Usuario usuarioCadastrado = repository.save(dto.toModel());		
+	public void cadastroNovaCategoria(@RequestBody @Valid CategoriaDTO dto) {
+		
+		Categoria categoria = repository.save(dto.toModel());
 	}
 }
