@@ -34,8 +34,8 @@ public class ConfiguracaoSeguranca extends WebSecurityConfigurerAdapter{
 		http
 		.csrf().disable()
 			.authorizeRequests()
-				.antMatchers(HttpMethod.POST,"/mercadolivre/v1/usuario/").permitAll()
-				.antMatchers("/mercadolivre/v1/usuario/auth/*").permitAll()
+				.antMatchers("/mercadolivre/v1/usuario/**").permitAll()
+				.antMatchers("/mercadolivre/v1/usuario/auth/**").permitAll()
 				.antMatchers("/h2-console/**").permitAll()
 				.anyRequest().authenticated()
 			.and()
