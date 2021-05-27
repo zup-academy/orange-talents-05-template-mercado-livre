@@ -17,7 +17,7 @@ public class Encriptador {
 	
 	public static boolean decode(String pass, String hash) {
 		PasswordEncoder passEncoder = new BCryptPasswordEncoder();
-		return passEncoder.matches(pass, pass);
+		return passEncoder.matches(pass, hash);
 	}
 	
 }

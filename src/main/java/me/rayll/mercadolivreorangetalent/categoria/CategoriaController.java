@@ -23,6 +23,6 @@ public class CategoriaController {
 	@Transactional
 	public void cadastroNovaCategoria(@RequestBody @Valid CategoriaDTO dto) {
 		
-		Categoria categoria = repository.save(dto.toModel());
+		Categoria categoria = repository.save(dto.toModel(repository));
 	}
 }

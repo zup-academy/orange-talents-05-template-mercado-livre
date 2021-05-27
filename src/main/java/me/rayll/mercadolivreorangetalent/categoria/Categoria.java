@@ -15,12 +15,12 @@ public class Categoria {
 	@Column(nullable = false, unique = true)
 	private String nome;
 	
-	private CategoriaPrincipal categoriaPrincipal;
+	private Categoria categoriaPrincipal;
 	
 	@Deprecated
 	private Categoria() {}
 
-	public Categoria(String nome, CategoriaPrincipal categoriaPrincipal) {
+	public Categoria(String nome, Categoria categoriaPrincipal) {
 		this.nome = nome;
 		this.categoriaPrincipal = categoriaPrincipal;
 	}

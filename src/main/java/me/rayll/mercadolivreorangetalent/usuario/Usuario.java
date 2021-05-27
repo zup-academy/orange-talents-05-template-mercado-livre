@@ -1,4 +1,4 @@
-package me.rayll.mercadolivreorangetalent.cliente;
+package me.rayll.mercadolivreorangetalent.usuario;
 
 import java.time.Instant;
 
@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Usuario {
@@ -28,5 +32,10 @@ public class Usuario {
 		this.login = login;
 		this.pass = pass;
 		this.instante = Instant.now();
-	}	
+	}
+	
+	public UsuarioDTO toDTO() {
+		return new UsuarioDTO(login, pass);
+	}
+	
 }

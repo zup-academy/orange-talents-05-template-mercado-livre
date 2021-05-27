@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import me.rayll.mercadolivreorangetalent.cliente.UsuarioRepository;
+import me.rayll.mercadolivreorangetalent.usuario.UsuarioRepository;
 
 @Component
 public class ValorUnicoEmailValidador implements ConstraintValidator<ValorUnicoEmail, Object>{

@@ -1,4 +1,6 @@
-package me.rayll.mercadolivreorangetalent.cliente;
+package me.rayll.mercadolivreorangetalent.usuario;
+
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -7,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	
 	public boolean existsByLogin(String login);
+
+	public Optional<Usuario> findByLogin(String login);
 }

@@ -1,4 +1,4 @@
-package me.rayll.mercadolivreorangetalent.cliente;
+package me.rayll.mercadolivreorangetalent.usuario;
 
 import java.time.Instant;
 
