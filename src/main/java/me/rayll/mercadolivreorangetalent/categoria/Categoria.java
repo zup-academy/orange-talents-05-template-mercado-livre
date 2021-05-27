@@ -5,25 +5,35 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import me.rayll.mercadolivreorangetalent.categoria.categoriaprincipal.CategoriaPrincipal;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Categoria {
+	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String nome;
-	
-	private Categoria categoriaPrincipal;
+	@ManyToOne
+	private Categoria categoriaMae;
 	
 	@Deprecated
 	private Categoria() {}
 
-	public Categoria(String nome, Categoria categoriaPrincipal) {
+	public Categoria(String nome) {
 		this.nome = nome;
-		this.categoriaPrincipal = categoriaPrincipal;
 	}
-	
-	
+
+	public void setCategoriaMae(Categoria categoriaMae) {
+		this.categoriaMae = categoriaMae;
+	}
+
+	public CategoriaDTO toDto() {
+		return new CategoriaDTO(nome);
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
 }

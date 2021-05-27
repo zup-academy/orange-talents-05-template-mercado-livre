@@ -12,7 +12,7 @@ import me.rayll.mercadolivreorangetalent.categoria.CategoriaRepository;
 public class NomeUnicoCategoriaValidador implements ConstraintValidator<NomeUnicoCategoria, Object>{
 	
 	@Autowired
-	CategoriaRepository repository;
+	private CategoriaRepository repository;
 	
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {

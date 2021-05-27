@@ -2,37 +2,45 @@ package me.rayll.mercadolivreorangetalent.categoria;
 
 import javax.validation.constraints.NotEmpty;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
-import me.rayll.mercadolivreorangetalent.categoria.categoriaprincipal.CategoriaPrincipal;
 import me.rayll.mercadolivreorangetalent.validador.categorianome.NomeUnicoCategoria;
 
 public class CategoriaDTO {
-
+	
 	@NotEmpty @NomeUnicoCategoria
 	private String nome;
 	
-	private Long categoriaPrincipal;
+	private Long idCategoriaMae;
 
 	@Deprecated
 	private CategoriaDTO() {}
 	
-	public CategoriaDTO(@NotEmpty String nome, Long categoriaPrincipal) {
+	public CategoriaDTO(@NotEmpty String nome, Long idCategoriaMae) {
 		this.nome = nome;
-		this.categoriaPrincipal = categoriaPrincipal;
+		this.idCategoriaMae = idCategoriaMae;
+	}
+	
+	public CategoriaDTO(@NotEmpty String nome) {
+		this.nome = nome;
 	}
 
 	public String getNome() {
 		return nome;
 	}
 
-	public Long getCategoriaPrincipal() {
-		return categoriaPrincipal;
+	public Long getIdCategoriaMae() {
+		return idCategoriaMae;
 	}
 
-	public Categoria toModel(JpaRepository<Categoria, Long> repository) {
-		Categoria categoriaToModel = repository.findById(this.categoriaPrincipal).get();
-		return new Categoria(this.nome, categoriaToModel);
+	@Override
+	public String toString() {
+		return "CategoriaDTO [nome=" + nome + ", idCategoriaMae=" + idCategoriaMae + "]";
+	}
+
+	public Categoria toModel() {
+		return new Categoria(this.nome);
 	}
 	
 	

@@ -1,5 +1,7 @@
 package me.rayll.mercadolivreorangetalent.categoria;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -11,18 +13,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import me.rayll.mercadolivreorangetalent.usuario.UsuarioRepository;
+
 @RestController
 @RequestMapping("mercadolivre/v1/categoria")
 public class CategoriaController {
-	
+
 	@Autowired
-	CategoriaRepository repository;
+	private CategoriaRepository categoriaRepository;
 	
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.OK)
 	@Transactional
-	public void cadastroNovaCategoria(@RequestBody @Valid CategoriaDTO dto) {
+	public CategoriaDTO cadastroNovaCategoria(@RequestBody @Valid CategoriaDTO dto) {
+		Categoria categoriaNova;
 		
-		Categoria categoria = repository.save(dto.toModel(repository));
+		if(dto.getIdCategoriaMae() != null) {
+			Categoria c = categoriaRepository.findById(dto.getIdCategoriaMae()).get();
+			categoriaNova = dto.toModel();
+			categoriaNova.setCategoriaMae(c);
+		}else {
+			categoriaNova = dto.toModel();
+		}
+		
+		Categoria categoriaSalva = categoriaRepository.save(categoriaNova);
+		
+		return categoriaSalva.toDto();
 	}
+
 }
