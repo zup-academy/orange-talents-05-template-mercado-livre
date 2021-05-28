@@ -86,6 +86,10 @@ public class Produto {
 	public boolean pertenceAoUsuario(Usuario possivelDono) {
 		 return this.dono.equals(possivelDono);
 	}
+
+	public @NotNull Long getId() {
+		return this.id;
+	}
 	
 	
 }

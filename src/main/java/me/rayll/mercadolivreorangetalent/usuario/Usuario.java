@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
@@ -67,6 +68,10 @@ public class Usuario {
 		} else if (!pass.equals(other.pass))
 			return false;
 		return true;
+	}
+
+	public @NotNull Long getId() {
+		return this.id;
 	}
 	
 	
