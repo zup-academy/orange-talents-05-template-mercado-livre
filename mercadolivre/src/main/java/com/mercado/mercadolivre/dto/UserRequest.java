@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.mercado.mercadolivre.entity.Usuario;
+import com.mercado.mercadolivre.validate.UniqueValue;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -12,6 +13,7 @@ public class UserRequest {
 
     @NotBlank
     @Email
+    @UniqueValue(entidade = Usuario.class, atributo = "userName", message = "Ja existe um usuario cadastrado com esse endereço de email")
     private String userName;
 
     @NotBlank
