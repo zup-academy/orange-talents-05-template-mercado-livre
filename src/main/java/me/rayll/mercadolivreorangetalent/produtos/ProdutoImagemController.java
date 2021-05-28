@@ -32,7 +32,7 @@ public class ProdutoImagemController {
 	@Transactional
 	public String adicionaImagens(@PathVariable("id") Long id, @Valid NovasImagensRequest request) {
 		
-		Usuario dono = usuarioRepository.findByLogin("rayla@gmail.com").get();
+		Usuario dono = usuarioRepository.findByLogin("rayller@gmail.com").get();
 		Produto produto = produtoRepository.findById(id).get();
 		
 		if(!produto.pertenceAoUsuario(dono)) {
