@@ -19,13 +19,15 @@ import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import me.rayll.mercadolivreorangetalent.categoria.Categoria;
 import me.rayll.mercadolivreorangetalent.usuario.Usuario;
 
 @Entity
 public class Produto {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @JsonIgnore
 	private Long id;
 	
 	@Column(nullable = false)
@@ -42,6 +44,8 @@ public class Produto {
 	private Usuario dono;
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
 	private Set<Caracteristica> caracteristicas = new HashSet<>();
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+	private Set<ImagemProduto> imagens = new HashSet<>();
 	
 	@Deprecated
 	private Produto() {}
@@ -66,5 +70,22 @@ public class Produto {
 		
 		return new ProdutoDTO(nome, quantidade, descricao, valor, categoria.getId(), list );
 	}
+
+	public void associaImagens(Set<String> links) {
+		Set<ImagemProduto> imagens =  links.stream().map(link -> new ImagemProduto(this, link)).collect(Collectors.toSet());
+		this.imagens.addAll(imagens);
+	}
+
+	@Override
+	public String toString() {
+		return "Produto [nome=" + nome + ", quantidade=" + quantidade + ", descricao=" + descricao + ", valor=" + valor
+				+ ", categoria=" + categoria + ", dono=" + dono + ", caracteristicas=" + caracteristicas + ", imagens="
+				+ imagens + "]";
+	}
+
+	public boolean pertenceAoUsuario(Usuario possivelDono) {
+		 return this.dono.equals(possivelDono);
+	}
+	
 	
 }
