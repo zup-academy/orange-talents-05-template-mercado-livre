@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 @Primary
 public class UploadFake implements Uploader{
-	/*
+	/**
 	 * @param imagens
 	 * @return links para imagens que foram uploadadas
 	 */

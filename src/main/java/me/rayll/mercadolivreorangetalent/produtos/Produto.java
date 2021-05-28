@@ -90,6 +90,10 @@ public class Produto {
 	public @NotNull Long getId() {
 		return this.id;
 	}
+
+	public Usuario getDono() {
+		return this.dono;
+	}
 	
 	
 }

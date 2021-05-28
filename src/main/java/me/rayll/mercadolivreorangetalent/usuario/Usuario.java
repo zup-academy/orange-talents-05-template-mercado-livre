@@ -73,6 +73,10 @@ public class Usuario {
 	public @NotNull Long getId() {
 		return this.id;
 	}
+
+	public String getEmail() {
+		return this.login;
+	}
 	
 	
 	
