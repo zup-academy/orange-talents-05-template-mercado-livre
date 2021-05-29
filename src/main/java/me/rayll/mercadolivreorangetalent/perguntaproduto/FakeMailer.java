@@ -10,7 +10,7 @@ import me.rayll.mercadolivreorangetalent.usuario.Usuario;
 public class FakeMailer implements Mailer{
 
 	@Override
-	public void send(String body, String subject, String nameFrom, String from, Usuario to) {
+	public void send(String body, String subject, String nameFrom, String from, String to) {
 		System.out.println(body);
 		System.out.println(subject);
 		System.out.println(nameFrom);

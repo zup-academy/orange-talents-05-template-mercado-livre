@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -16,13 +18,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import me.rayll.mercadolivreorangetalent.categoria.Categoria;
+import me.rayll.mercadolivreorangetalent.opiniaoproduto.OpiniaoProduto;
+import me.rayll.mercadolivreorangetalent.perguntaproduto.PerguntaProduto;
+import me.rayll.mercadolivreorangetalent.perguntaproduto.PerguntaProdutoDTO;
 import me.rayll.mercadolivreorangetalent.usuario.Usuario;
+import net.bytebuddy.build.HashCodeAndEqualsPlugin.Sorted;
 
 @Entity
 public class Produto {
@@ -46,6 +53,10 @@ public class Produto {
 	private Set<Caracteristica> caracteristicas = new HashSet<>();
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
 	private Set<ImagemProduto> imagens = new HashSet<>();
+	@OneToMany(mappedBy = "produto") @OrderBy()
+	private SortedSet<PerguntaProduto> perguntas = new TreeSet<PerguntaProduto>();
+	@OneToMany(mappedBy = "produto") @OrderBy("titulo asc")
+	private SortedSet<OpiniaoProduto> opinioes = new TreeSet<OpiniaoProduto>();
 	
 	@Deprecated
 	private Produto() {}
@@ -63,12 +74,16 @@ public class Produto {
 	}
 	
 	public ProdutoDTO toDTO() {
+		List<CaracteristicaDTO> listaCaracteristicas = new ArrayList<>();
+		caracteristicas.forEach(c -> listaCaracteristicas.add(c.toDTO()));
+
+		Set<PerguntaProdutoDTO> listaPerguntas = perguntas.stream().map(pergunta -> pergunta.toDTO()).collect(Collectors.toSet());
 		
-		List<CaracteristicaDTO> list = new ArrayList<>();
-		
-		caracteristicas.forEach(c -> list.add(c.toDTO()));
-		
-		return new ProdutoDTO(nome, quantidade, descricao, valor, categoria.getId(), list );
+		 ProdutoDTO produtoDTO = new ProdutoDTO(nome, quantidade, descricao, valor, categoria.getId(), listaCaracteristicas );
+		 
+		 produtoDTO.setPerguntas(listaPerguntas);
+		 produtoDTO.setImagens(imagens);
+		 return produtoDTO;
 	}
 
 	public void associaImagens(Set<String> links) {
@@ -94,6 +109,64 @@ public class Produto {
 	public Usuario getDono() {
 		return this.dono;
 	}
+
+	public SortedSet<PerguntaProduto> getPerguntas() {
+		return perguntas;
+	}
+	
+	public SortedSet<OpiniaoProduto> getOpinioes() {
+		return opinioes;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((dono == null) ? 0 : dono.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Produto other = (Produto) obj;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (dono == null) {
+			if (other.dono != null)
+				return false;
+		} else if (!dono.equals(other.dono))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (valor == null) {
+			if (other.valor != null)
+				return false;
+		} else if (!valor.equals(other.valor))
+			return false;
+		return true;
+	}
+	
 	
 	
 }
