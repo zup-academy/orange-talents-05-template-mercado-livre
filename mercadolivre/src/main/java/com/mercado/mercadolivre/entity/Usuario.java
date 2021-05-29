@@ -36,4 +36,7 @@ public class Usuario {
         this.registro = registro;
     }
 
+    public Long getId() {
+        return this.id;
+    }
 }
