@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -165,6 +166,14 @@ public class Produto {
 		} else if (!valor.equals(other.valor))
 			return false;
 		return true;
+	}
+
+	public boolean abaterDoEstoque(@Positive int qntd) {
+		if(qntd <= this.quantidade) {
+			this.quantidade -= qntd;
+			return true;
+		}
+		return false;
 	}
 	
 	
