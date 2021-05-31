@@ -1,11 +1,11 @@
-package com.mercado.mercadolivre.controller;
+package com.mercado.mercadolivre.dto;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 public class LoginFrom {
 
     private String email;
-    private String senha;
+    private String password;
 
 
     public String getEmail() {
@@ -16,16 +16,16 @@ public class LoginFrom {
         this.email = email;
     }
 
-    public String getSenha() {
-        return this.senha;
+    public String getPassword() {
+        return this.password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public UsernamePasswordAuthenticationToken converter() {
-        return new UsernamePasswordAuthenticationToken(email, senha);
+        return new UsernamePasswordAuthenticationToken(email, password);
     }
 
 }

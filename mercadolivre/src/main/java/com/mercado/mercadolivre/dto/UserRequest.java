@@ -13,7 +13,7 @@ public class UserRequest {
 
     @NotBlank
     @Email
-    @UniqueValue(entidade = Usuario.class, atributo = "userName", message = "Ja existe um usuario cadastrado com esse endereço de email")
+    @UniqueValue(entidade = Usuario.class, atributo = "email", message = "Ja existe um usuario cadastrado com esse endereço de email")
     private String userName;
 
     @NotBlank
