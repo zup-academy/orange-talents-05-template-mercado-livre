@@ -2,8 +2,8 @@ package com.mercado.mercadolivre.controller;
 
 import javax.validation.Valid;
 
-import com.mercado.mercadolivre.dto.LoginFrom;
-import com.mercado.mercadolivre.dto.TokenDto;
+import com.mercado.mercadolivre.dto.LoginRequest;
+import com.mercado.mercadolivre.dto.LoginResponse;
 import com.mercado.mercadolivre.security.TokenService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-public class AutenticacaoController {
+public class LoginController {
     
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -28,14 +28,14 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<TokenDto> autenticar(@RequestBody @Valid LoginFrom loginFrom) {
-        UsernamePasswordAuthenticationToken dadosLogin = loginFrom.converter();
+    public ResponseEntity<LoginResponse> autenticar(@RequestBody @Valid LoginRequest loginRequest) {
+        UsernamePasswordAuthenticationToken dadosLogin = loginRequest.converter();
         
         try {
             Authentication authentication = authenticationManager.authenticate(dadosLogin);
             String token = tokenService.gerarToken(authentication);
-            System.out.println(token);
-            return ResponseEntity.ok(new TokenDto(token, "Bearer"));
+
+            return ResponseEntity.ok(new LoginResponse(token, "Bearer"));
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

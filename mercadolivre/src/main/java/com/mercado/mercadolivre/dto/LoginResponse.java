@@ -1,11 +1,11 @@
 package com.mercado.mercadolivre.dto;
 
-public class TokenDto {
+public class LoginResponse {
 
     private String token;
     private String tipo;
 
-    public TokenDto(String token, String tipo) {
+    public LoginResponse(String token, String tipo) {
         this.token = token;
         this.tipo = tipo;
     }

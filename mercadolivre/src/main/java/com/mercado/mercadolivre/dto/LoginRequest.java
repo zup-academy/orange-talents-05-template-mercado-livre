@@ -2,7 +2,7 @@ package com.mercado.mercadolivre.dto;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-public class LoginFrom {
+public class LoginRequest {
 
     private String email;
     private String password;
