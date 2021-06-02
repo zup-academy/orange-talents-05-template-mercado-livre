@@ -27,6 +27,11 @@ public class CaracteristicaProduto {
         this.produto = produto;
     }
 
+    @Deprecated
+    public CaracteristicaProduto() {
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
