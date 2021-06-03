@@ -76,4 +76,8 @@ public class Produto {
     public boolean belongsTo(Usuario user) {
         return this.usuario.equals(user);
     }
+
+    public Usuario getOwner() {
+        return this.usuario;
+    }
 }

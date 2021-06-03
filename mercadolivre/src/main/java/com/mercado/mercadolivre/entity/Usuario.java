@@ -51,6 +51,10 @@ public class Usuario implements UserDetails{
         return this.id;
     }
 
+    public String getEmail() {
+        return this.email;
+    }
+
     @Override
     public String getPassword() {
         return this.password;
