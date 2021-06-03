@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @Primary
-public class UploaderFake {
+public class UploaderFake implements Uploader {
 
     public Set<String> envia(List<MultipartFile> imagens) {
         return imagens.stream()

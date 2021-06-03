@@ -10,7 +10,7 @@ import com.mercado.mercadolivre.dto.ImagemRequest;
 import com.mercado.mercadolivre.dto.ProdutoRequest;
 import com.mercado.mercadolivre.entity.Produto;
 import com.mercado.mercadolivre.entity.Usuario;
-import com.mercado.mercadolivre.util.UploaderFake;
+import com.mercado.mercadolivre.util.Uploader;
 import com.mercado.mercadolivre.validate.ProibeCaracteristicasComNomeIgualValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
@@ -34,7 +33,7 @@ public class ProdutoController {
     EntityManager manager;
 
     @Autowired
-    private UploaderFake uploaderFake;
+    private Uploader uploaderFake;
 
     @InitBinder(value = "produtoRequest")
     public void init(WebDataBinder webDataBinder) {
@@ -53,11 +52,14 @@ public class ProdutoController {
 
     @PostMapping("/{id}/imagens")
     @Transactional
-    public ResponseEntity<?> adicionarImagens(@PathVariable("id") Long id, @Valid ImagemRequest imagemRequest, @AuthenticationPrincipal Usuario usuario) {
+    public ResponseEntity<?> adicionarImagens(@PathVariable("id") Long id, @Valid ImagemRequest imagemRequest,
+            @AuthenticationPrincipal Usuario usuario) {
         Produto produto = manager.find(Produto.class, id);
 
-        if (produto == null) return ResponseEntity.notFound().build();
-        if (!produto.belongsTo(usuario)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (produto == null)
+            return ResponseEntity.notFound().build();
+        if (!produto.belongsTo(usuario))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
         Set<String> links = uploaderFake.envia(imagemRequest.getImagens());
         produto.associaImagens(links);
