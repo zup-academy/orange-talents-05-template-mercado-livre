@@ -35,4 +35,8 @@ public class ImagemProduto {
     }
 
 
+    public String getLink() {
+        return this.link;
+    }
+
 }

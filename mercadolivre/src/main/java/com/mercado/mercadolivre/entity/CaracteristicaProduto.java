@@ -32,6 +32,15 @@ public class CaracteristicaProduto {
     }
 
 
+    public String getNome() {
+        return this.nome;
+    }
+
+    public String getDescricao() {
+        return this.descricao;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (o == this)

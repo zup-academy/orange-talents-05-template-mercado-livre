@@ -38,4 +38,17 @@ public class Opiniao {
     public Opiniao() {
     }
 
+    public Integer getNota() {
+        return this.nota;
+    }
+
+    public String getDescricao() {
+        return this.descricao;
+    }
+
+    public String getTitulo() {
+        return this.titulo;
+    }
+
+
 }

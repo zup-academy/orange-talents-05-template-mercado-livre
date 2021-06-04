@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Pergunta {
@@ -19,6 +20,7 @@ public class Pergunta {
     private Produto produto;
     @ManyToOne
     private Usuario usuario;
+    @NotNull
     private LocalDate instante;
 
     public Pergunta(@NotBlank String titulo, Produto produto, Usuario usuario) {

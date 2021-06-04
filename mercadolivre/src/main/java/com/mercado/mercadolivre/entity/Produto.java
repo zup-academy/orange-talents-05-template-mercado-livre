@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import com.mercado.mercadolivre.dto.CaracteristicasRequest;
+import com.mercado.mercadolivre.dto.CaracteristicasResponse;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.util.Assert;
@@ -46,6 +48,10 @@ public class Produto {
     private Set<CaracteristicaProduto> caracteristicas = new HashSet<>();
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<ImagemProduto> imagens = new HashSet<>();
+    @OneToMany(mappedBy = "produto")
+    private Set<Pergunta> perguntas = new HashSet<>();
+    @OneToMany(mappedBy = "produto")
+    public Set<Opiniao> opinioes = new HashSet<>();
 
     public Produto(@NotBlank String nome, @NotNull @Positive BigDecimal valor,
             @NotNull @PositiveOrZero Integer quantidade, @NotBlank @Length(max = 1000) String descricao,
@@ -67,6 +73,31 @@ public class Produto {
     public Produto() {
     }
 
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public BigDecimal getValor() {
+        return this.valor;
+    }
+
+    public Integer getQuantidade() {
+        return this.quantidade;
+    }
+
+    public String getDescricao() {
+        return this.descricao;
+    }
+
+    public Set<CaracteristicaProduto> getCaracteristicas() {
+        return this.caracteristicas;
+    }
+
+    public Set<ImagemProduto> getImagens() {
+        return this.imagens;
+    }
+
     public void associaImagens(Set<String> links) {
         Set<ImagemProduto> imagensProduto = links.stream().map(link -> new ImagemProduto(this, link)).collect(Collectors.toSet());
 
@@ -80,4 +111,23 @@ public class Produto {
     public Usuario getOwner() {
         return this.usuario;
     }
+
+    public Set<Pergunta> getPerguntas() {
+        return this.perguntas;
+    }
+
+    public Set<Opiniao> getOpinioes() {
+        return this.opinioes;
+    }
+
+    public Integer getTotalOpinioes() {
+        return this.opinioes.size();
+    }
+
+    public BigDecimal getMediaOpinioes() {
+        List<Integer> notas = this.opinioes.stream().map(opiniao -> opiniao.getNota()).collect(Collectors.toList());
+        Integer totalNotas = notas.stream().reduce(0, (acumulado, atual) -> acumulado + atual);
+        return BigDecimal.valueOf(totalNotas).divide(BigDecimal.valueOf(getTotalOpinioes()));
+    }
+
 }
