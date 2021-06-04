@@ -23,7 +23,6 @@ import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import com.mercado.mercadolivre.dto.CaracteristicasRequest;
-import com.mercado.mercadolivre.dto.CaracteristicasResponse;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.util.Assert;
@@ -73,6 +72,9 @@ public class Produto {
     public Produto() {
     }
 
+    public Long getId() {
+        return this.id;
+    }
 
     public String getNome() {
         return this.nome;
